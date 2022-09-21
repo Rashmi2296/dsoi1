@@ -1,0 +1,39 @@
+#
+#   @(#)$Id: CM_CONFIG,v 1.1.24.3 2003-04-15 12:21:24-06 jedsall dev_13_00_49 $
+#
+CMS_NAME           =  ddts
+CMS_HOST           =  imaddts
+CMSPROJNAME        =  it_dsoi
+BUILD_PHASE        =  B
+CMS_QUERY_CMD      =  /usr/local/scm_tools/bin/gen_cr_data
+CMS_UPDATE_CMD     =  /usr/local/scm_tools/bin/gen_cr_update -N T
+CMS_REPORT_CMD     =  /usr/local/scm_tools/bin/gen_cr_report
+MAKER              =  make
+MAKEFILE           =  Makefile
+EXTRA_IMAKE_ARGS   =  
+EXTRA_MAKE_ARGS    =  
+ROOTMAKE           =  1
+VERCONSYS          =  RCS5.7
+SRCHOST            =  
+BLDHOSTS           =  
+MULTIPLATFORM      =  0
+PLATFORMS          =  
+ABSOLUTELINKS      =  0
+TOPLVLDIRS         =  config src
+CONFIGTARGS        =  
+SRCTARGS           =  hdrs libs images
+TARGDIRS           =  
+IMPORTPLATFORMS    =  
+MAILDEST           = 
+DFLT_IMAGE_OWNER   =  0
+DFLT_IMAGE_GROUP   =  0
+IMAGEALIASES       =  it_dsoi
+RELFILE_DIR        =  relfile_bin 
+ARKHOST            =  suomd72i
+ARKCMD             =  tar cvf
+ARKBASE            =  it_dsoi
+ARKDEST            =  /usr/projects/it_dsoi/scm_build
+TAPEHOST           =  suomd72i
+TAPECMD            =  tar cvf
+TAPEDEV            =  /dev/rmt/0m
+PRINT_RELNOTES     = 

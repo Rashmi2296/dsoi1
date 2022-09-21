@@ -1,0 +1,8 @@
+#!/bin/ksh
+
+#
+# The only argument to this script should be the absolute path
+# the DSOILog executable.
+#
+cd $1
+DSOILog -a

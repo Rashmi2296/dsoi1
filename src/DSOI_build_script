@@ -1,0 +1,124 @@
+#!/bin/ksh
+
+build_number=$1
+DIM_WORKSET=$2
+DIM_PASSWORD=$3
+
+export ORACLE_HOME=/dbms/oracleFTS
+export LD_LIBRARY_PATH=/opt/mqm/java/lib:$ORACLE_HOME/lib32
+export BUILDROOT=$HOME/CM_delivery/DSOI/DSOI_${build_number}
+BIN_DIR= BUILDROOT=$HOME/CM_delivery/DSOI/DSOI_${build_number}
+export PATH=$ORACLE_HOME:$PATH
+
+
+# Get rid of .metadata junk
+cd ${BUILDROOT}
+find . -type d -name .metadata -exec rm -rf {} \;
+
+	echo
+	echo "---------- NOW BUILDING: DSOI Components ----------"
+	cd /u/scmadmin/CM_delivery/DSOI/DSOI_${build_number}/src
+	echo
+	make install 
+	echo
+
+# Build DSOI Main 
+
+echo
+echo "---------- NOW BUILDING: DSOI ----------"
+
+cd /u/scmadmin/CM_delivery/DSOI/DSOI_${build_number}/src
+make images
+cd /u/scmadmin/CM_delivery/DSOI/DSOI_${build_number}/images
+tar -cvf - * | gzip > ../DSOI${build_number}.tar.gz
+
+echo
+echo "Copying ${BUILDROOT}/DSOI.tar.gz to /usr/projects/tarfiles/DSOI/DSOI.r${build_number}.tar.Z"
+echo
+cp ${BUILDROOT}/DSOI.tar.gz /usr/projects/tarfiles/DSOI/DSOI.r${build_number}.tar.Z
+
+# Create upload ticket
+
+. /opt/pcms/serena/dimensions/10.1/cm/dmprofile
+# export PCMSDB=sbg
+# export TWO_TASK=scmoss
+# export DMDB=sbg@scmoss
+
+echo "library upload" > /tmp/fts_wt_desc_$$
+dmcli -user scmadmin -pass ${DIM_PASSWORD} -host suomd184 -dbname sbg -dsn scmoss -cmd 'CC "FTS" "WT" /DESCRIPTION="'/tmp/fts_wt_desc_$$'" /ATTRIBUTES=(MINOR=[".01"],PLAN_RELEASE=["01"],ASSIGNED_ENGINEER="Andrew Reed",CATEGORY="GetCKTID",CR_TYPE="Documentation",TARGET_RELEASE="Future",ORIG_INIT="Pending Project",SEVERITY="4",WHEN_FOUND="System Test",Title="DSOI '$build_number' library uploads") /WORKSET="FTS:'$DIM_WORKSET'"'
+rm /tmp/fts_wt_desc_$$
+
+# Search for WT created above
+set -A WT_FOR_UPLOAD `sqlplus -SILENT sbg_report/sbg_report@scmoss << THE_END
+
+SET NEWPAGE 0
+SET SPACE 0
+SET LINESIZE 400
+SET PAGESIZE 0
+SET ECHO OFF
+SET FEEDBACK OFF
+SET VERIFY OFF
+SET HEADING OFF
+
+SELECT ch_doc_id
+FROM pcms_chdoc_data
+WHERE title = 'DSOI ${build_number} library uploads'
+AND ch_doc_id like '%FTS_WT%'
+ORDER BY ch_doc_id DESC;
+
+exit
+THE_END`
+
+WT_FOR_UPLOAD=${WT_FOR_UPLOAD[0]}
+
+echo
+echo "WT_FOR_UPLOAD set to $WT_FOR_UPLOAD"
+echo
+
+# Upload Files
+
+cd ${BUILDROOT}
+find . -type d -name .metadata -exec rm -rf {} \;
+
+for i in ${Project_to_import[*]}; do
+	find imports/${i} -type f >> tmp_upload_file_list
+done
+
+dmcli -user scmadmin -pass ${DIM_PASSWORD} -host suomd184 -dbname sbg -dsn scmoss -cmd 'upload /DIRECTORY=. /USER_FILELIST=tmp_upload_file_list /RECURSIVE /FORCE_CHECKIN /WORKSET=FTS:"'${DIM_WORKSET}'" /KEEP /CHANGE_DOC_IDS=("'${WT_FOR_UPLOAD}'")'
+
+rm tmp_upload_file_list
+
+# Action files to BASELINED
+
+sqlplus -SILENT sbg_report/sbg_report@scmoss << THE_END
+
+SET NEWPAGE 0
+SET SPACE 0
+SET LINESIZE 200
+SET PAGESIZE 0
+SET ECHO OFF
+SET FEEDBACK OFF
+SET VERIFY OFF
+SET HEADING OFF
+
+spool /tmp/files_to_action$$
+
+SELECT distinct 'AI "'||pcms_item_data.product_id||':'||pcms_item_data.item_id||'.'||pcms_item_data.variant||'-'||pcms_item_data.item_type||';'||pcms_item_data.revision||'" /STATUS="BASELINED"'||' /WORKSET=FTS:${DIM_WORKSET}'
+FROM pcms_item_data, pcms_workset_info, pcms_workset_items, pcms_chdoc_related_items, pcms_chdoc_data
+WHERE pcms_chdoc_data.ch_doc_id = '${WT_FOR_UPLOAD}'
+AND pcms_chdoc_related_items.reltype_name = 'In Response To'
+AND pcms_workset_items.item_uid = pcms_item_data.item_uid
+AND pcms_workset_info.workset_uid = pcms_workset_items.workset_uid
+AND pcms_chdoc_related_items.to_item_uid = pcms_item_data.item_uid
+AND pcms_chdoc_related_items.from_ch_uid = pcms_chdoc_data.ch_uid;
+
+exit
+
+THE_END
+
+dmcli -user scmadmin -pass ${DIM_PASSWORD} -host suomd184 -dbname sbg -dsn scmoss -file /tmp/files_to_action$$.lst
+rm /tmp/files_to_action$$.lst
+
+dmcli -user scmadmin -pass ${DIM_PASSWORD} -host suomd184 -dbname sbg -dsn scmoss -cmd 'AC "'${WT_FOR_UPLOAD}'" /STATUS="BUILD"'
+
+

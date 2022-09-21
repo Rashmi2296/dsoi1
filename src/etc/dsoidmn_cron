@@ -1,0 +1,9 @@
+00 04 * * * find /opt/DSOI/logfiles/DSOI*.log -mtime +2 -exec rm -f {} \; > /opt/DSOI/logfiles/DSOI_delete_logs.log 2>&1
+45 04 * * * /opt/DSOI/scripts/startupDSOI.ksh > /opt/DSOI/logfiles/DSOI_startupTM.log 2>&1
+
+################################################################
+# filesys_chk.pl entries added 9/3/99
+# filesys_chk.pl uses bdf to check on filesystem usage and pages the on-call person if the filesystem reaches the (un)desired level.
+05,35 5-23 * * 0-6 /opt/DSOIrel/auto_page/filesys_chk.pl > /dev/null 2>&1
+10 22 * * 0-6 /home/dsoidmn/loadDataRef > /home/dsoidmn/loadDataRef.out 2>&1
+################################################################

@@ -1,0 +1,83 @@
+#####################################################################
+#
+# This script cleans up the 'QL_DSOI_HOLD' queue.  
+#
+# WARNING:   All messages in 'QL_DSOI_HOLD' with
+#            putDate less than currentDate will
+#            be removed, and saved in a temporary.
+#            file.  This script should be run 
+#            just before the Qmgr is shutdown.  
+#
+# Requirement:  The executable module DSOIcleanUpQ must	
+#               be in /opt/DSOI/bin directory
+#
+# Directions:   enter the following command:
+#
+#                  cleanUpHold
+#
+#     The contents of 'QL_DSOI_HOLD' queue are saved
+#     in a temporary file,  /tmp/holdQ_msg.yyyymmdd
+#
+#####################################################################
+
+HOSTNAME=`uname -n`
+case $HOSTNAME in
+  hpdnt490)
+    QMGR_NAME=DOTSEROQM1
+    ;;
+  meatloaf)
+    QMGR_NAME=DOTSEROQM1
+    ;;
+  hpdnt496)
+    QMGR_NAME=KIDFROSTQM1
+    ;;
+  kidfrost)
+    QMGR_NAME=KIDFROSTQM1
+    ;;
+  dsoi-ne1)
+    QMGR_NAME=DSOINE1QM
+    ;;
+  dsoi-ne2)
+    QMGR_NAME=DSOINE2QM
+    ;;
+  suomp96j)
+    QMGR_NAME=SUOMP96JQM
+    ;;
+  suomp97j)
+    QMGR_NAME=SUOMP97JQM
+    ;;
+  sublime)
+    QMGR_NAME=SUBLIMEQM2
+    ;;
+  suomd73i)
+    QMGR_NAME=SUOMD73IQM2
+    ;;
+  suomt70i)
+    QMGR_NAME=SUOMT70IQM
+    ;;
+  suomt74i)
+    QMGR_NAME=SUOMT74IQM2
+    ;;
+  suomt78i)
+    QMGR_NAME=SUOMT78IQM
+    ;;
+  suomt00k)
+    QMGR_NAME=SUOMT00KQM
+    ;;
+  hpomt793)
+    QMGR_NAME=HPOMT793QM2
+    ;;
+  *)
+    echo ${0}:"QL_DSOI_HOLD Queue is not defined for '${HOSTNAME}'"
+    exit 1
+    ;;
+esac
+DAY=`date +%Y%m%d`
+
+#echo ${0}:" Clean out QL_DSOI_HOLD Queue for '${HOSTNAME}', on $DAY"
+
+/opt/DSOI/bin/DSOIcleanUpQ  QL_DSOI_HOLD  $QMGR_NAME  $DAY  > /tmp/holdQ_msg.$DAY
+## /opt/DSOI/bin/DSOIcleanUpQ  QL_DSOI_HOLD  $QMGR_NAME  $DAY -2  > /tmp/holdQ_msg.$DAY
+
+echo "***  All msgs less than $DAY have been removed from QL_DSOI_HOLD for ${QMGR_NAME}"
+echo "     The  messages are saved in /tmp/holdQ_msg.$DAY"

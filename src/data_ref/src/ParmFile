@@ -1,0 +1,3 @@
+WaitIntervalTime(1000ms=1sec)= 20000
+MaximumMessagesReadin=          1000
+# WaitIntervalTime(45seconds)= 45000

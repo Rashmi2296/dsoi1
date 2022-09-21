@@ -1,0 +1,27 @@
+###############################################################################
+## @(#)
+##
+## FILE:        DSOILog.hdr
+##
+## DESCRIPTION: Alarm Attribute header file for DSOI Log Encapsulator
+##
+## DEVELOPER:   Joo Ahn Lee
+##
+## REVISION HISTORY:
+##
+##  Name: Joo Ahn Lee  Current Rel: 00.00.01
+##  Date: ??/??/97
+##  CR #: ?????
+##  Comments: Initial release of DSOILog.hdr into the base
+##
+###############################################################################
+
+NAME:                 "DSOI Critical Error LE"
+
+DESCRIPTION:          "DSOILog LE for Critical Error log"
+
+LOGPATH:              "/opt/DSOI/logfiles/alarm/DSOI_alarm.log"
+
+INTERVAL:             1m
+
+FROM_LAST_POS:        Yes

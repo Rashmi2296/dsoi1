@@ -1,0 +1,199 @@
+#!/bin/ksh
+QMGRS=`grep 'Name=' /var/mqm/mqs.ini|sort -u`
+NUM_QMGRS=`grep 'Name=' /var/mqm/mqs.ini|wc -l`
+TMPFILE=/tmp/checkQM$$.out
+TOOLBIN=/home/mqm/bin
+
+function selectQueueManager
+{
+	unset QMGR_NAME
+        echo "  Select a QUEUE MANAGER on: `hostname`..."
+        echo "    "$QMGRS"\n"
+	for i in $QMGRS
+	do
+		QMGR_NAME=`echo $i|cut -d = -f2`
+		echo "    Would you like $QMGR_NAME? (y/n) \c"
+		read ANSWER
+		if [[ ${ANSWER} = [Yy] ]]
+		then
+   			echo 
+			break
+		else
+   			echo 
+		fi
+
+	done
+# ------------------------------------------------------
+#   Check to see if the Qmanager is running
+# - - - - - - ------------------------------ - - - - - -
+#
+  if [ -z "`ps -ef |grep ${QMGR_NAME}|grep amqzxma0`" ] ; then
+    echo "Qmanager ............ ${QMGR_NAME} is NOT running on: `hostname` \n"
+#   exit 1
+  else
+    echo "Qmanager ............ ${QMGR_NAME} is running on: `hostname` \n"
+  fi
+
+# ------------------------------------------------------
+#   Check to see if the channel initiator for Qmanager is running
+# - - - - - - ------------------------------ - - - - - -
+#
+  if [ -z "`ps -ef |grep ${QMGR_NAME}|grep runmqchi`" ] ; then
+    echo "Channel initiator for ${QMGR_NAME} is NOT running on: `hostname` \n"
+  else
+    echo "Channel initiator for ${QMGR_NAME} is running on: `hostname`\n "
+  fi
+
+# ------------------------------------------------------
+#   Check to see if the trigger monitor for Qmanager is running
+# - - - - - - ------------------------------ - - - - - -
+#
+  if [ -z "`ps -ef |grep ${QMGR_NAME}|grep runmqtrm`" ] ; then
+    echo "Trigger monitor for   ${QMGR_NAME} is NOT running on: `hostname` \n"
+  else
+    echo "Trigger monitor for   ${QMGR_NAME} is running on: `hostname` \n"
+  fi
+}
+
+function displayChannelStatus
+{
+echo " Piping output to 'more $TMPFILE...'"
+echo "Displaying channel status for $QMGR_NAME"
+runmqsc $QMGR_NAME >$TMPFILE <<EOF
+dis chs(CH*) status
+EOF
+more $TMPFILE
+rm $TMPFILE
+}
+
+function displayQT_QueueDepth
+{
+echo " Piping output to 'more $TMPFILE...'"
+echo "Displaying transmission queue (QT*) depth for $QMGR_NAME"
+runmqsc $QMGR_NAME >$TMPFILE <<EOF
+dis q(QT*) curdepth
+EOF
+more $TMPFILE
+rm $TMPFILE
+}
+
+function displayQL_QueueDepth
+{
+echo "Displaying QL* queue depth for $QMGR_NAME"
+echo " Piping output to 'more $TMPFILE...'"
+runmqsc $QMGR_NAME >$TMPFILE <<EOF
+dis q(QL*) curdepth
+EOF
+more $TMPFILE
+rm $TMPFILE
+}
+
+function displayAll_QueueDepth
+{
+echo "Displaying ALL queue depth for $QMGR_NAME"
+echo " Piping output to 'more $TMPFILE...'"
+runmqsc $QMGR_NAME >$TMPFILE <<EOF
+dis q(*) curdepth
+EOF
+more $TMPFILE
+rm $TMPFILE
+}
+
+function browseQueue
+{
+    echo "Enter the queue name: \c"
+    read QUEUE_NAME
+    if [ ! -z "${QUEUE_NAME}" ]
+    then
+        echo " Piping output to 'more $TMPFILE...'"
+        ${TOOLBIN}/browseq $QUEUE_NAME $QMGR_NAME>$TMPFILE
+        more $TMPFILE
+        rm $TMPFILE
+    else
+        echo "Did not receive a queue name.\n"
+    fi
+}
+
+function getMessages
+{
+    echo "Enter the queue name: \c"
+    read QUEUE_NAME
+    if [ ! -z "${QUEUE_NAME}" ]
+    then
+        echo " Piping output to 'more $TMPFILE...'"
+        ${TOOLBIN}/getq $QUEUE_NAME $QMGR_NAME>$TMPFILE
+        more $TMPFILE
+        rm $TMPFILE
+    else
+        echo "Did not receive a queue name.\n"
+    fi
+}
+
+function displayOptions
+{
+echo
+echo "checkQM Option List"
+echo "  1) Select a Queue Manager"
+echo "  2) Display Channel Status"
+echo "  3) Display Transmission Queue Depth"
+echo "  4) Display QL* Queue Depth"
+echo "  5) Display ALL Queue Depth"
+echo "  6) Browse a Queue"
+echo "  q) Quit"
+echo
+echo "Enter option for $QMGR_NAME (1-6, [qQ]): \c"
+read OPTION
+
+case $OPTION in
+  1)
+    selectQueueManager
+    ;;
+  2)
+    displayChannelStatus
+    ;;
+  3)
+    displayQT_QueueDepth
+    ;;
+  4)
+    displayQL_QueueDepth
+    ;;
+  5)
+    displayAll_QueueDepth
+    ;;
+  6)
+    browseQueue
+    ;;
+  [Qq])
+    exit
+    ;;
+  *)
+    echo ${0}:" Invalid option: '${OPTION}'"
+    ;;
+esac
+}
+
+clear
+selectQueueManager
+
+LOOP=1
+GO=Y
+while [[ $GO = [Yy] ]]
+do
+
+displayOptions
+
+#if [[ ${LOOP} != [1] ]]
+#then
+#	echo "\n Would you like to check again? (y/n) \c"
+#	read GO
+#	if [[ ${GO} != [Yy] ]]
+#	then
+#		echo $0" End."
+#		break
+#	fi
+#else
+#	echo $0" Start...\n"
+#	LOOP=2
+#fi
+
+done
