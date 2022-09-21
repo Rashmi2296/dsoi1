@@ -1,0 +1,12 @@
+15 00 * * * /opt/DSOI/scripts/archiveDSOI.ksh > /opt/DSOI/logfiles/DSOI_archive.log 2>&1
+00 01 * * * /opt/DSOI/scripts/shutdownMQSeries.ksh > /opt/DSOI/logfiles/DSOI_shutdown.log 2>&1
+15 01 * * * /opt/DSOI/scripts/shutdownMQSeries.ksh >> /opt/DSOI/logfiles/DSOI_shutdown.log 2>&1
+30 01 * * * find /opt/DSOI/logfiles/report/DSOI* -mtime +6 -exec rm -f {} \; > /dev/null 2>&1
+30 04 * * * /opt/DSOI/scripts/startupMQSeries.ksh > /opt/DSOI/logfiles/DSOI_startup.log 2>&1
+15 05 * * * /opt/DSOI/scripts/cleanUpHold > /opt/DSOI/logfiles/DSOI_cleanUpHold.log 2>&1
+30 05 * * * find /tmp/holdQ_msg* -mtime +6 -exec rm -f {} \; > /dev/null 2>&1
+#
+05,20,35,50 05-23 * * 1-5 /home/mqm/mqcheck.ksh >> /tmp/mqcheck.out 2>&1
+05,20,35,50 05-23 * * 6 /home/mqm/mqcheck.ksh >> /tmp/mqcheck.out 2>&1
+05,20,35,50 05-23 * * 0 /home/mqm/mqcheck.ksh >> /tmp/mqcheck.out 2>&1
+~

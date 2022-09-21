@@ -1,0 +1,6 @@
+it_dsoi                 0755
+it_dsoi/bin             0755
+it_dsoi/etc             0755
+it_dsoi/lib             0755
+it_dsoi/scripts         0755
+it_dsoi/relfile_bin     0755

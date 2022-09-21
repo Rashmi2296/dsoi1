@@ -1,0 +1,1873 @@
+###############################################################################
+## @(#)
+##
+## FILE:        DSOILog.attr
+##
+## DESCRIPTION: Alarm Attribute file for DSOILog encapsulator
+##              Verify file on bdecihd1 machine:
+##                   /opt/slayer/bin/sl_aaf_lint DSOILog.attr
+##                   contact Kenneth Robinson, kcrobin@uswest.com
+##
+## DEVELOPER:   Joo Ahn Lee
+##
+## REVISION HISTORY:
+##
+##  Name:     R Furuta
+##  Release:  08.00.00
+##  Date:     11/14/2000
+##  CR #:     4767
+##  Comments: Remove 4P stuff (DSOIRouteRequest and DSOIRouteReply)
+##
+##  Name:     Bryce Cox
+##  Release:  07.00.01
+##  Date:     03/27/2000
+##  CR #:     3133
+##  Comments: Removed alarms that are no longer in the DSOIRequest code: 
+##                 12, 14, 17, 18, 20.
+##            Added 5000 series alarms for DSOIRouteRequest.
+##            Added 6000 series alarms for DSOIRouteReply.
+##
+##  Name: Jim Pepler Current Rel: 06.00.00
+##  Date: 09/16/99
+##  CR #: 588
+##  Comments: Changed to new format used by Ken Robinson and matched alarms to old file
+##
+##  Name: Linda Parks Current Rel: 04.00.00
+##  Date: 02/25/98
+##  CR #: 2329
+##  Comments: Added alarms
+##
+##  Name: Joo Ahn Lee  Current Rel: 03.00.02
+##  Date: 12/11/97
+##  CR #: N/A
+##  Comments: Added alarms 10,12,13,14,15,16,17,18,20,1008,1009
+##
+##  Name: Jim Pepler   Current Rel: 00.00.02
+##  Date: 09/19/97
+##  CR #: N/A
+##  Comments: Updated HELPTEXT
+##
+##  Name: Joo Ahn Lee  Current Rel: 00.00.01
+##  Date: 09/16/97
+##  CR #: N/A
+##  Comments: Initial release
+##
+###############################################################################
+type:                    LOG
+name:                    "DSOI Critical Error LE"
+description:             "DSOILog LE for Critical Error log"
+interval:                1m
+logfile:                 "/opt/DSOI/logfiles/alarm/DSOI_alarm.log"
+readFrom:                lastPos
+========================================
+suppress:                dups 15m
+notification:            yes
+application:             DSOI
+application.set:         DSOI
+applVersion.set:  6.0
+architecture.set:        UNIX
+instructions.set:        "Overview/Summary
+
+     The DSOIRequest process is unable to put a message to a queue and so is
+     unable to continue.
+
+Diagnostic/Corrective Procedure
+
+MQSeries reason codes:  2004, 2005, 2018, 2019, 2026, 2029, 2030, 2039, 2046,
+			2047, 2050, 2053, 2173, 2195, 2219
+
+	Indicates a problem with the application.
+
+        The problem must be corrected in the application.  Refer the problem to 
+        the development staff.
+
+MQSeries reason codes:  2009, 2161, 2162
+
+	Indicates a problem with MQSeries queue manager or related processes.
+
+        The necessary MQSeries processes must be running.  Verify that the
+        MQseries processes are running with the following command:
+        \"ps -ef | grep amq\"
+        (amqhasmx, amqzllp0, amqcrsta, amqzxma0, amqzlaa0 should be running)
+        If the processes are not running, restart them with the following command:
+        \"strmqm [QManagerName]\"
+
+MQSeries reason codes:  2013, 2027, 2041, 2048, 2051, 2052, 2101
+
+	Indicates a problem with MQSeries queue manager configuration.
+
+        The MQSeries queue manager configuration must be corrected.  Refer to the
+        application installation procedures to verify proper configuration.
+
+MQSeries reason codes:  2056, 2071, 2102
+
+	Indicates a problem with operating system resource availability.
+
+        The problem must be corrected in the operating system configuration.
+        Contact the OS system administrator.
+
+Additional information about the cause of problems related to MQSeries programs
+may be available in:
+
+  /var/mqm/qmgrs/[QManagerName]/errors/AMQERRnn.LOG (log entries are made in the
+  current log file; AMQERR01.LOG or AMQERR02.LOG or AMQERR03.LOG)
+
+  or
+
+  /var/mqm/errors/AMQnnnnn.n.FDC 
+  (FDC files are written for each error occurrence e.g. AMQ03440.0.FDC)
+
+If an MQSeries reason code not previously listed is encountered, contact the
+application administrator.  Also, if the procedures suggested above do not
+resolve the problem, contact the application administrator."
+message:                 "DSOIREQUEST:07:CRITICAL:errored because message can't be put on the QL_DSOI_REPORTQ: DSOIREQUEST exiting"
+message.match:           "DSOIREQUEST:07:CRITICAL:errored because message can't be put on the QL_DSOI_REPORTQ: DSOIREQUEST exiting"
+message.set:           "DSOIREQUEST:07:CRITICAL:errored because message can't be put on the QL_DSOI_REPORTQ: DSOIREQUEST exiting"
+messageGroup.set:        DSOI
+messageIdNo:             07
+messageIdNo.set:         07
+messageIdPrefix:         DSOI
+messageIdPrefix.set:     DSOI
+severity.set:            critical
+========================================
+suppress:                dups 15m
+notification:            yes
+application:             DSOI
+application.set:         DSOI
+applVersion.set:  6.0
+architecture.set:        UNIX
+instructions.set:        "Overview/Summary
+
+     The DSOIRequest process is unable to get a message from a queue and so is
+     unable to continue.
+
+Diagnostic/Corrective Procedure
+
+MQSeries reason codes:  2004, 2005, 2010, 2018, 2019, 2026, 2036, 2037, 2046,
+			2090, 2186, 2195, 2219
+
+	Indicates a problem with the application.
+
+        The problem must be corrected in the application.  Refer the problem to 
+        the development staff.
+
+MQSeries reason codes:  2009, 2161, 2162
+
+	Indicates a problem with MQSeries queue manager or related processes.
+
+        The necessary MQSeries processes must be running.  Verify that the
+        MQseries processes are running with the following command:
+        \"ps -ef | grep amq\"
+        (amqhasmx, amqzllp0, amqcrsta, amqzxma0, amqzlaa0 should be running)
+        If the processes are not running, restart them with the following command:
+        \"strmqm [QManagerName]\"
+
+MQSeries reason codes:  2016, 2041, 2052, 2101
+
+	Indicates a problem with MQSeries queue manager configuration.
+
+        The MQSeries queue manager configuration must be corrected.  Refer to the
+        application installation procedures to verify proper configuration.
+
+MQSeries reason codes:  2071, 2102
+
+	Indicates a problem with operating system resource availability.
+
+        The problem must be corrected in the operating system configuration.
+        Contact the OS system administrator.
+
+Additional information about the cause of problems related to MQSeries programs
+may be available in:
+
+  /var/mqm/qmgrs/[QManagerName]/errors/AMQERRnn.LOG (log entries are made in the
+  current log file; AMQERR01.LOG or AMQERR02.LOG or AMQERR03.LOG)
+
+  or
+
+  /var/mqm/errors/AMQnnnnn.n.FDC 
+  (FDC files are written for each error occurrence e.g. AMQ03440.0.FDC)
+
+If an MQSeries reason code not previously listed is encountered, contact the
+application administrator.  Also, if the procedures suggested above do not
+resolve the problem, contact the application administrator."
+message:                 "DSOIREQUEST:08:CRITICAL:getMsg() FAILED because MQGET() failed:DSOIREQUEST is exiting"
+message.match:           "DSOIREQUEST:08:CRITICAL:getMsg() FAILED because MQGET() failed:DSOIREQUEST is exiting"
+message.set:           "DSOIREQUEST:08:CRITICAL:getMsg() FAILED because MQGET() failed:DSOIREQUEST is exiting"
+messageGroup.set:        DSOI
+messageIdNo:             08
+messageIdNo.set:         08
+messageIdPrefix:         DSOI
+messageIdPrefix.set:     DSOI
+severity.set:            critical
+========================================
+suppress:                dups 15m
+notification:            yes
+application:             DSOI
+application.set:         DSOI
+applVersion.set:  6.0
+architecture.set:        UNIX
+instructions.set:        "Overview/Summary
+
+     The DSOIRequest process is unable to put a message to a queue and so is
+     unable to continue.
+
+Diagnostic/Corrective Procedure
+
+MQSeries reason codes:  2004, 2005, 2018, 2019, 2026, 2029, 2030, 2039, 2046,
+			2047, 2050, 2053, 2173, 2195, 2219
+
+	Indicates a problem with the application.
+
+        The problem must be corrected in the application.  Refer the problem to 
+        the development staff.
+
+MQSeries reason codes:  2009, 2161, 2162
+
+	Indicates a problem with MQSeries queue manager or related processes.
+
+        The necessary MQSeries processes must be running.  Verify that the
+        MQseries processes are running with the following command:
+        \"ps -ef | grep amq\"
+        (amqhasmx, amqzllp0, amqcrsta, amqzxma0, amqzlaa0 should be running)
+        If the processes are not running, restart them with the following command:
+        \"strmqm [QManagerName]\"
+
+MQSeries reason codes:  2013, 2027, 2041, 2048, 2051, 2052, 2101
+
+	Indicates a problem with MQSeries queue manager configuration.
+
+        The MQSeries queue manager configuration must be corrected.  Refer to the
+        application installation procedures to verify proper configuration.
+
+MQSeries reason codes:  2056, 2071, 2102
+
+	Indicates a problem with operating system resource availability.
+
+        The problem must be corrected in the operating system configuration.
+        Contact the OS system administrator.
+
+Additional information about the cause of problems related to MQSeries programs
+may be available in:
+
+  /var/mqm/qmgrs/[QManagerName]/errors/AMQERRnn.LOG (log entries are made in the
+  current log file; AMQERR01.LOG or AMQERR02.LOG or AMQERR03.LOG)
+
+  or
+
+  /var/mqm/errors/AMQnnnnn.n.FDC 
+  (FDC files are written for each error occurrence e.g. AMQ03440.0.FDC)
+
+If an MQSeries reason code not previously listed is encountered, contact the
+application administrator.  Also, if the procedures suggested above do not
+resolve the problem, contact the application administrator."
+message:                 "DSOIREQUEST:09:CRITICAL:putMsg() FAILED because MQPUT() failed to send to Service Order Processor:DSOIREQUEST is exiting"
+message.match:           "DSOIREQUEST:09:CRITICAL:putMsg() FAILED because MQPUT() failed to send to Service Order Processor:DSOIREQUEST is exiting"
+message.set:           "DSOIREQUEST:09:CRITICAL:putMsg() FAILED because MQPUT() failed to send to Service Order Processor:DSOIREQUEST is exiting"
+messageGroup.set:        DSOI
+messageIdNo:             09
+messageIdNo.set:         09
+messageIdPrefix:         DSOI
+messageIdPrefix.set:     DSOI
+severity.set:            critical
+========================================
+suppress:                dups 15m
+notification:            yes
+application:             DSOI
+application.set:         DSOI
+applVersion.set:         7.0
+architecture.set:        UNIX
+instructions.set:        "Overview/Summary
+
+     The DSOIRequest process is unable to send a message request to the Service Order Processor, unable to continue.
+
+Diagnostic/Corrective Procedure
+
+Contact the application to find out what it is sending to DSOI as a request message.  DSOI is not receiving all the specified parameters that it expects from them. Verify with them that they are sending the correct message format to DSOI.  This error will occur until they correct their message format.  "
+message:                 "DSOIREQUEST:10:CRITICAL:DSOIREQUEST invalid requestType: DSOIREQUEST exiting"
+message.match:           "DSOIREQUEST:10:CRITICAL:DSOIREQUEST invalid requestType: DSOIREQUEST exiting"
+message.set:             "DSOIREQUEST:10:CRITICAL:DSOIREQUEST invalid requestType: DSOIREQUEST exiting"
+messageGroup.set:        DSOI
+messageIdNo:             10
+messageIdNo.set:         10
+messageIdPrefix:         DSOI
+messageIdPrefix.set:     DSOI
+severity.set:            critical
+========================================
+suppress:                dups 15m
+notification:            yes
+application:             DSOI
+application.set:         DSOI
+applVersion.set:         7.0
+architecture.set:        UNIX
+instructions.set:        "Overview/Summary
+
+     The DSOIRequest process is unable to send a message request to the Service Order Processor, unable to continue.
+
+Diagnostic/Corrective Procedure
+
+Contact the application to find out what it is sending to DSOI as a request message.  DSOI is not receiving all the specified parameters that it expects from them. Verify with them that they are sending the correct message format to DSOI.  This error will occur until they correct their message format.  "
+message:                 "DSOIREQUEST:11:CRITICAL:DSOIREQUEST does not have a valid requestQ: DSOIREQUEST exiting"
+message.match:           "DSOIREQUEST:11:CRITICAL:DSOIREQUEST does not have a valid requestQ: DSOIREQUEST exiting"
+message.set:             "DSOIREQUEST:11:CRITICAL:DSOIREQUEST does not have a valid requestQ: DSOIREQUEST exiting"
+messageGroup.set:        DSOI
+messageIdNo:             11
+messageIdNo.set:         11
+messageIdPrefix:         DSOI
+messageIdPrefix.set:     DSOI
+severity.set:            critical
+========================================
+suppress:                dups 15m
+notification:            yes
+application:             DSOI
+application.set:         DSOI
+applVersion.set:         7.0
+architecture.set:        UNIX
+instructions.set:        "Overview/Summary
+
+     The DSOIRequest process is unable to put a message to a queue and so is unable to continue.
+
+Diagnostic/Corrective Procedure
+
+MQSeries reason codes:  2004, 2005, 2018, 2019, 2026, 2029, 2030, 2039, 2046,
+			2047, 2050, 2053, 2173, 2195, 2219
+
+	Indicates a problem with the application.
+
+        The problem must be corrected in the application.  Refer the problem to 
+        the development staff.
+
+MQSeries reason codes:  2009, 2161, 2162
+
+	Indicates a problem with MQSeries queue manager or related processes.
+
+        The necessary MQSeries processes must be running.  Verify that the
+        MQseries processes are running with the following command:
+        \"ps -ef | grep amq\"
+        (amqhasmx, amqzllp0, amqcrsta, amqzxma0, amqzlaa0 should be running)
+        If the processes are not running, restart them with the following command:
+        \"strmqm [QManagerName]\"
+
+MQSeries reason codes:  2013, 2027, 2041, 2048, 2051, 2052, 2101
+
+	Indicates a problem with MQSeries queue manager configuration.
+
+        The MQSeries queue manager configuration must be corrected.  Refer to the
+        application installation procedures to verify proper configuration.
+
+MQSeries reason codes:  2056, 2071, 2102
+
+	Indicates a problem with operating system resource availability.
+
+        The problem must be corrected in the operating system configuration.
+        Contact the OS system administrator.
+
+Additional information about the cause of problems related to MQSeries programs
+may be available in:
+
+  /var/mqm/qmgrs/[QManagerName]/errors/AMQERRnn.LOG (log entries are made in the
+  current log file; AMQERR01.LOG or AMQERR02.LOG or AMQERR03.LOG)
+
+  or
+
+  /var/mqm/errors/AMQnnnnn.n.FDC 
+  (FDC files are written for each error occurrence e.g. AMQ03440.0.FDC)
+
+If an MQSeries reason code not previously listed is encountered, contact the
+application administrator.  Also, if the procedures suggested above do not
+resolve the problem, contact the application administrator."
+message:                 "DSOIREQUEST:12:CRITICAL:FAILED because can't put correlated error message(messageMassage() failed) on HOLDQ so no error will be sent back to the REQUESTOR"
+message.match:           "DSOIREQUEST:12:CRITICAL:FAILED because can't put correlated error message(messageMassage() failed) on HOLDQ so no error will be sent back to the REQUESTOR"
+message.set:             "DSOIREQUEST:12:CRITICAL:FAILED because can't put correlated error message(messageMassage() failed) on HOLDQ so no error will be sent back to the REQUESTOR"
+messageGroup.set:        DSOI
+messageIdNo:             12
+messageIdNo.set:         12
+messageIdPrefix:         DSOI
+messageIdPrefix.set:     DSOI
+severity.set:            critical
+========================================
+suppress:                dups 15m
+notification:            yes
+application:             DSOI
+application.set:         DSOI
+applVersion.set:         7.0
+architecture.set:        UNIX
+instructions.set:        "Overview/Summary
+
+     The DSOIRequest process is unable to put a message to a queue and so is unable to continue.
+
+Diagnostic/Corrective Procedure
+
+MQSeries reason codes:  2004, 2005, 2018, 2019, 2026, 2029, 2030, 2039, 2046,
+			2047, 2050, 2053, 2173, 2195, 2219
+
+	Indicates a problem with the application.
+
+        The problem must be corrected in the application.  Refer the problem to 
+        the development staff.
+
+MQSeries reason codes:  2009, 2161, 2162
+
+	Indicates a problem with MQSeries queue manager or related processes.
+
+        The necessary MQSeries processes must be running.  Verify that the
+        MQseries processes are running with the following command:
+        \"ps -ef | grep amq\"
+        (amqhasmx, amqzllp0, amqcrsta, amqzxma0, amqzlaa0 should be running)
+        If the processes are not running, restart them with the following command:
+        \"strmqm [QManagerName]\"
+
+MQSeries reason codes:  2013, 2027, 2041, 2048, 2051, 2052, 2101
+
+	Indicates a problem with MQSeries queue manager configuration.
+
+        The MQSeries queue manager configuration must be corrected.  Refer to the
+        application installation procedures to verify proper configuration.
+
+MQSeries reason codes:  2056, 2071, 2102
+
+	Indicates a problem with operating system resource availability.
+
+        The problem must be corrected in the operating system configuration.
+        Contact the OS system administrator.
+
+Additional information about the cause of problems related to MQSeries programs
+may be available in:
+
+  /var/mqm/qmgrs/[QManagerName]/errors/AMQERRnn.LOG (log entries are made in the
+  current log file; AMQERR01.LOG or AMQERR02.LOG or AMQERR03.LOG)
+
+  or
+
+  /var/mqm/errors/AMQnnnnn.n.FDC 
+  (FDC files are written for each error occurrence e.g. AMQ03440.0.FDC)
+
+If an MQSeries reason code not previously listed is encountered, contact the
+application administrator.  Also, if the procedures suggested above do not
+resolve the problem, contact the application administrator."
+message:                 "DSOIREQUEST:13:CRITICAL:putMsg() FAILED to send the ERROR REPLYQ="
+message.match:           "DSOIREQUEST:13:CRITICAL:putMsg() FAILED to send the ERROR REPLYQ="
+message.set:             "DSOIREQUEST:13:CRITICAL:putMsg() FAILED to send the ERROR REPLYQ="
+messageGroup.set:        DSOI
+messageIdNo:             13
+messageIdNo.set:         13
+messageIdPrefix:         DSOI
+messageIdPrefix.set:     DSOI
+severity.set:            critical
+========================================
+suppress:                dups 15m
+notification:            yes
+application:             DSOI
+application.set:         DSOI
+applVersion.set:         7.0
+architecture.set:        UNIX
+instructions.set:        "Overview/Summary
+
+     The DSOIRequest process is unable to put a message to a queue and so is unable to continue.
+
+Diagnostic/Corrective Procedure
+
+MQSeries reason codes:  2004, 2005, 2018, 2019, 2026, 2029, 2030, 2039, 2046,
+			2047, 2050, 2053, 2173, 2195, 2219
+
+	Indicates a problem with the application.
+
+        The problem must be corrected in the application.  Refer the problem to 
+        the development staff.
+
+MQSeries reason codes:  2009, 2161, 2162
+
+	Indicates a problem with MQSeries queue manager or related processes.
+
+        The necessary MQSeries processes must be running.  Verify that the
+        MQseries processes are running with the following command:
+        \"ps -ef | grep amq\"
+        (amqhasmx, amqzllp0, amqcrsta, amqzxma0, amqzlaa0 should be running)
+        If the processes are not running, restart them with the following command:
+        \"strmqm [QManagerName]\"
+
+MQSeries reason codes:  2013, 2027, 2041, 2048, 2051, 2052, 2101
+
+	Indicates a problem with MQSeries queue manager configuration.
+
+        The MQSeries queue manager configuration must be corrected.  Refer to the
+        application installation procedures to verify proper configuration.
+
+MQSeries reason codes:  2056, 2071, 2102
+
+	Indicates a problem with operating system resource availability.
+
+        The problem must be corrected in the operating system configuration.
+        Contact the OS system administrator.
+
+Additional information about the cause of problems related to MQSeries programs
+may be available in:
+
+  /var/mqm/qmgrs/[QManagerName]/errors/AMQERRnn.LOG (log entries are made in the
+  current log file; AMQERR01.LOG or AMQERR02.LOG or AMQERR03.LOG)
+
+  or
+
+  /var/mqm/errors/AMQnnnnn.n.FDC 
+  (FDC files are written for each error occurrence e.g. AMQ03440.0.FDC)
+
+If an MQSeries reason code not previously listed is encountered, contact the
+application administrator.  Also, if the procedures suggested above do not
+resolve the problem, contact the application administrator."
+message:                 "DSOIREQUEST:14:CRITICAL:FAILED because can't put correlated error message on HOLDQ so no error will be sent back to the REQUESTOR"
+message.match:           "DSOIREQUEST:14:CRITICAL:FAILED because can't put correlated error message on HOLDQ so no error will be sent back to the REQUESTOR"
+message.set:             "DSOIREQUEST:14:CRITICAL:FAILED because can't put correlated error message on HOLDQ so no error will be sent back to the REQUESTOR"
+messageGroup.set:        DSOI
+messageIdNo:             14
+messageIdNo.set:         14
+messageIdPrefix:         DSOI
+messageIdPrefix.set:     DSOI
+severity.set:            critical
+========================================
+suppress:                dups 15m
+notification:            yes
+application:             DSOI
+application.set:         DSOI
+applVersion.set:         7.0
+architecture.set:        UNIX
+instructions.set:        "Overview/Summary
+
+     The DSOIRequest process is unable to put a message to a queue and so is unable to continue.
+
+Diagnostic/Corrective Procedure
+
+MQSeries reason codes:  2004, 2005, 2018, 2019, 2026, 2029, 2030, 2039, 2046,
+			2047, 2050, 2053, 2173, 2195, 2219
+
+	Indicates a problem with the application.
+
+        The problem must be corrected in the application.  Refer the problem to 
+        the development staff.
+
+MQSeries reason codes:  2009, 2161, 2162
+
+	Indicates a problem with MQSeries queue manager or related processes.
+
+        The necessary MQSeries processes must be running.  Verify that the
+        MQseries processes are running with the following command:
+        \"ps -ef | grep amq\"
+        (amqhasmx, amqzllp0, amqcrsta, amqzxma0, amqzlaa0 should be running)
+        If the processes are not running, restart them with the following command:
+        \"strmqm [QManagerName]\"
+
+MQSeries reason codes:  2013, 2027, 2041, 2048, 2051, 2052, 2101
+
+	Indicates a problem with MQSeries queue manager configuration.
+
+        The MQSeries queue manager configuration must be corrected.  Refer to the
+        application installation procedures to verify proper configuration.
+
+MQSeries reason codes:  2056, 2071, 2102
+
+	Indicates a problem with operating system resource availability.
+
+        The problem must be corrected in the operating system configuration.
+        Contact the OS system administrator.
+
+Additional information about the cause of problems related to MQSeries programs
+may be available in:
+
+  /var/mqm/qmgrs/[QManagerName]/errors/AMQERRnn.LOG (log entries are made in the
+  current log file; AMQERR01.LOG or AMQERR02.LOG or AMQERR03.LOG)
+
+  or
+
+  /var/mqm/errors/AMQnnnnn.n.FDC 
+  (FDC files are written for each error occurrence e.g. AMQ03440.0.FDC)
+
+If an MQSeries reason code not previously listed is encountered, contact the
+application administrator.  Also, if the procedures suggested above do not
+resolve the problem, contact the application administrator."
+message:                 "DSOIREQUEST:15:CRITICAL:putMsg() FAILED to send an error to queue="
+message.match:           "DSOIREQUEST:15:CRITICAL:putMsg() FAILED to send an error to queue="
+message.set:             "DSOIREQUEST:15:CRITICAL:putMsg() FAILED to send an error to queue="
+messageGroup.set:        DSOI
+messageIdNo:             15
+messageIdNo.set:         15
+messageIdPrefix:         DSOI
+messageIdPrefix.set:     DSOI
+severity.set:            critical
+========================================
+suppress:                dups 15m
+notification:            yes
+application:             DSOI
+application.set:         DSOI
+applVersion.set:         7.0
+architecture.set:        UNIX
+instructions.set:        "Overview/Summary
+
+     The DSOIRequest process is unable to put a message to a queue and so is unable to continue.
+
+Diagnostic/Corrective Procedure
+
+MQSeries reason codes:  2004, 2005, 2018, 2019, 2026, 2029, 2030, 2039, 2046,
+			2047, 2050, 2053, 2173, 2195, 2219
+
+	Indicates a problem with the application.
+
+        The problem must be corrected in the application.  Refer the problem to 
+        the development staff.
+
+MQSeries reason codes:  2009, 2161, 2162
+
+	Indicates a problem with MQSeries queue manager or related processes.
+
+        The necessary MQSeries processes must be running.  Verify that the
+        MQseries processes are running with the following command:
+        \"ps -ef | grep amq\"
+        (amqhasmx, amqzllp0, amqcrsta, amqzxma0, amqzlaa0 should be running)
+        If the processes are not running, restart them with the following command:
+        \"strmqm [QManagerName]\"
+
+MQSeries reason codes:  2013, 2027, 2041, 2048, 2051, 2052, 2101
+
+	Indicates a problem with MQSeries queue manager configuration.
+
+        The MQSeries queue manager configuration must be corrected.  Refer to the
+        application installation procedures to verify proper configuration.
+
+MQSeries reason codes:  2056, 2071, 2102
+
+	Indicates a problem with operating system resource availability.
+
+        The problem must be corrected in the operating system configuration.
+        Contact the OS system administrator.
+
+Additional information about the cause of problems related to MQSeries programs
+may be available in:
+
+  /var/mqm/qmgrs/[QManagerName]/errors/AMQERRnn.LOG (log entries are made in the
+  current log file; AMQERR01.LOG or AMQERR02.LOG or AMQERR03.LOG)
+
+  or
+
+  /var/mqm/errors/AMQnnnnn.n.FDC 
+  (FDC files are written for each error occurrence e.g. AMQ03440.0.FDC)
+
+If an MQSeries reason code not previously listed is encountered, contact the
+application administrator.  Also, if the procedures suggested above do not
+resolve the problem, contact the application administrator."
+message:                 "DSOIREQUEST:16:CRITICAL:DSOIREQUEST is unable to send to the HOLDQ error in MQPUT(): DSOIREQUEST exiting"
+message.match:           "DSOIREQUEST:16:CRITICAL:DSOIREQUEST is unable to send to the HOLDQ error in MQPUT(): DSOIREQUEST exiting"
+message.set:             "DSOIREQUEST:16:CRITICAL:DSOIREQUEST is unable to send to the HOLDQ error in MQPUT(): DSOIREQUEST exiting"
+messageGroup.set:        DSOI
+messageIdNo:             16
+messageIdNo.set:         16
+messageIdPrefix:         DSOI
+messageIdPrefix.set:     DSOI
+severity.set:            critical
+========================================
+suppress:                dups 15m
+notification:            yes
+application:             DSOI
+application.set:         DSOI
+applVersion.set:         7.0
+architecture.set:        UNIX
+instructions.set:        "Overview/Summary
+
+     The DSOIRequest process is unable to get a message from a queue and so is unable to continue.
+
+Diagnostic/Corrective Procedure
+
+MQSeries reason codes:  2004, 2005, 2010, 2018, 2019, 2026, 2036, 2037, 2046,
+			2090, 2186, 2195, 2219
+
+	Indicates a problem with the application.
+
+        The problem must be corrected in the application.  Refer the problem to 
+        the development staff.
+
+MQSeries reason codes:  2009, 2161, 2162
+
+	Indicates a problem with MQSeries queue manager or related processes.
+
+        The necessary MQSeries processes must be running.  Verify that the
+        MQseries processes are running with the following command:
+        \"ps -ef | grep amq\"
+        (amqhasmx, amqzllp0, amqcrsta, amqzxma0, amqzlaa0 should be running)
+        If the processes are not running, restart them with the following command:
+        \"strmqm [QManagerName]\"
+
+MQSeries reason codes:  2016, 2041, 2052, 2101
+
+	Indicates a problem with MQSeries queue manager configuration.
+
+        The MQSeries queue manager configuration must be corrected.  Refer to the
+        application installation procedures to verify proper configuration.
+
+MQSeries reason codes:  2071, 2102
+
+	Indicates a problem with operating system resource availability.
+
+        The problem must be corrected in the operating system configuration.
+        Contact the OS system administrator.
+
+Additional information about the cause of problems related to MQSeries programs
+may be available in:
+
+  /var/mqm/qmgrs/[QManagerName]/errors/AMQERRnn.LOG (log entries are made in the
+  current log file; AMQERR01.LOG or AMQERR02.LOG or AMQERR03.LOG)
+
+  or
+
+  /var/mqm/errors/AMQnnnnn.n.FDC 
+  (FDC files are written for each error occurrence e.g. AMQ03440.0.FDC)
+
+If an MQSeries reason code not previously listed is encountered, contact the
+application administrator.  Also, if the procedures suggested above do not
+resolve the problem, contact the application administrator."
+message:                 "DSOIREQUEST:17:CRITICAL:getMsg() FAILED because MQGET() failed for the DATAREFQ:DSOIREQUEST is exiting"
+message.match:           "DSOIREQUEST:17:CRITICAL:getMsg() FAILED because MQGET() failed for the DATAREFQ:DSOIREQUEST is exiting"
+message.set:             "DSOIREQUEST:17:CRITICAL:getMsg() FAILED because MQGET() failed for the DATAREFQ:DSOIREQUEST is exiting"
+messageGroup.set:        DSOI
+messageIdNo:             17
+messageIdNo.set:         17
+messageIdPrefix:         DSOI
+messageIdPrefix.set:     DSOI
+severity.set:            critical
+========================================
+suppress:                dups 15m
+notification:            yes
+application:             DSOI
+application.set:         DSOI
+applVersion.set:         7.0
+architecture.set:        UNIX
+instructions.set:        "Overview/Summary
+
+     The DSOIRequest process is unable to get a message from a queue and so is unable to continue.
+
+Diagnostic/Corrective Procedure
+
+MQSeries reason codes:  2004, 2005, 2010, 2018, 2019, 2026, 2036, 2037, 2046,
+			2090, 2186, 2195, 2219
+
+	Indicates a problem with the application.
+
+        The problem must be corrected in the application.  Refer the problem to 
+        the development staff.
+
+MQSeries reason codes:  2009, 2161, 2162
+
+	Indicates a problem with MQSeries queue manager or related processes.
+
+        The necessary MQSeries processes must be running.  Verify that the
+        MQseries processes are running with the following command:
+        \"ps -ef | grep amq\"
+        (amqhasmx, amqzllp0, amqcrsta, amqzxma0, amqzlaa0 should be running)
+        If the processes are not running, restart them with the following command:
+        \"strmqm [QManagerName]\"
+
+MQSeries reason codes:  2016, 2041, 2052, 2101
+
+	Indicates a problem with MQSeries queue manager configuration.
+
+        The MQSeries queue manager configuration must be corrected.  Refer to the
+        application installation procedures to verify proper configuration.
+
+MQSeries reason codes:  2071, 2102
+
+	Indicates a problem with operating system resource availability.
+
+        The problem must be corrected in the operating system configuration.
+        Contact the OS system administrator.
+
+Additional information about the cause of problems related to MQSeries programs
+may be available in:
+
+  /var/mqm/qmgrs/[QManagerName]/errors/AMQERRnn.LOG (log entries are made in the
+  current log file; AMQERR01.LOG or AMQERR02.LOG or AMQERR03.LOG)
+
+  or
+
+  /var/mqm/errors/AMQnnnnn.n.FDC 
+  (FDC files are written for each error occurrence e.g. AMQ03440.0.FDC)
+
+If an MQSeries reason code not previously listed is encountered, contact the
+application administrator.  Also, if the procedures suggested above do not
+resolve the problem, contact the application administrator."
+message:                 "DSOIREQUEST:18:CRITICAL:readDataRef() FAILED for the DATAREFQ:DSOIREQUEST is exiting"
+message.match:           "DSOIREQUEST:18:CRITICAL:readDataRef() FAILED for the DATAREFQ:DSOIREQUEST is exiting"
+message.set:             "DSOIREQUEST:18:CRITICAL:readDataRef() FAILED for the DATAREFQ:DSOIREQUEST is exiting"
+messageGroup.set:        DSOI
+messageIdNo:             18
+messageIdNo.set:         18
+messageIdPrefix:         DSOI
+messageIdPrefix.set:     DSOI
+severity.set:            critical
+========================================
+suppress:                dups 15m
+notification:            yes
+application:             DSOI
+application.set:         DSOI
+applVersion.set:         7.0
+architecture.set:        UNIX
+instructions.set:        "Overview/Summary
+
+     The DSOIRequest process is unable to send a message request to the Service Order Processor, unable to continue.
+
+Diagnostic/Corrective Procedure
+
+Contact the application to find out what it is sending to DSOI as a request message.  DSOI is not receiving all the specified parameters that it expects from them. Verify with them that they are sending the correct message format to DSOI.  This error will occur until they correct their message format.  "
+message:                 "DSOIREQUEST:19:CRITICAL:DSOIREQUEST does not have a valid replyQ: DSOIREQUEST exiting"
+message.match:           "DSOIREQUEST:19:CRITICAL:DSOIREQUEST does not have a valid replyQ: DSOIREQUEST exiting"
+message.set:             "DSOIREQUEST:19:CRITICAL:DSOIREQUEST does not have a valid replyQ: DSOIREQUEST exiting"
+messageGroup.set:        DSOI
+messageIdNo:             19
+messageIdNo.set:         19
+messageIdPrefix:         DSOI
+messageIdPrefix.set:     DSOI
+severity.set:            critical
+========================================
+suppress:                dups 15m
+notification:            yes
+application:             DSOI
+application.set:         DSOI
+applVersion.set:  6.0
+architecture.set:        UNIX
+instructions.set:        "Overview/Summary
+
+     The DSOIReply process is unable to get a message from a queue and so is
+     unable to continue.
+
+Diagnostic/Corrective Procedure
+
+MQSeries reason codes:  2004, 2005, 2010, 2018, 2019, 2026, 2036, 2037, 2046,
+			2090, 2186, 2195, 2219
+
+	Indicates a problem with the application.
+
+        The problem must be corrected in the application.  Refer the problem to 
+        the development staff.
+
+MQSeries reason codes:  2009, 2161, 2162
+
+	Indicates a problem with MQSeries queue manager or related processes.
+
+        The necessary MQSeries processes must be running.  Verify that the
+        MQseries processes are running with the following command:
+        \"ps -ef | grep amq\"
+        (amqhasmx, amqzllp0, amqcrsta, amqzxma0, amqzlaa0 should be running)
+        If the processes are not running, restart them with the following command:
+        \"strmqm [QManagerName]\"
+
+MQSeries reason codes:  2016, 2041, 2052, 2101
+
+	Indicates a problem with MQSeries queue manager configuration.
+
+        The MQSeries queue manager configuration must be corrected.  Refer to the
+        application installation procedures to verify proper configuration.
+
+MQSeries reason codes:  2071, 2102
+
+	Indicates a problem with operating system resource availability.
+
+        The problem must be corrected in the operating system configuration.
+        Contact the OS system administrator.
+
+Additional information about the cause of problems related to MQSeries programs
+may be available in:
+
+  /var/mqm/qmgrs/[QManagerName]/errors/AMQERRnn.LOG (log entries are made in the
+  current log file; AMQERR01.LOG or AMQERR02.LOG or AMQERR03.LOG)
+
+  or
+
+  /var/mqm/errors/AMQnnnnn.n.FDC 
+  (FDC files are written for each error occurrence e.g. AMQ03440.0.FDC)
+
+If an MQSeries reason code not previously listed is encountered, contact the
+application administrator.  Also, if the procedures suggested above do not
+resolve the problem, contact the application administrator."
+message:                 "DSOIREPLY:1005:CRITICAL:DSOImainReply() failed because MQGET() failed: DSOIREPLY exiting for"
+message.match:           "DSOIREPLY:1005:CRITICAL:DSOImainReply() failed because MQGET() failed: DSOIREPLY exiting for"
+message.set:           "DSOIREPLY:1005:CRITICAL:DSOImainReply() failed because MQGET() failed: DSOIREPLY exiting for"
+messageGroup.set:        DSOI
+messageIdNo:             1005
+messageIdNo.set:         1005
+messageIdPrefix:         DSOI
+messageIdPrefix.set:     DSOI
+severity.set:            critical
+========================================
+suppress:                dups 15m
+notification:            yes
+application:             DSOI
+application.set:         DSOI
+applVersion.set:  6.0
+architecture.set:        UNIX
+instructions.set:        "Overview/Summary
+
+     The DSOIReply process is unable to put a message to a queue and so is
+     unable to continue.
+
+Diagnostic/Corrective Procedure
+
+MQSeries reason codes:  2004, 2005, 2018, 2019, 2026, 2029, 2030, 2039, 2046,
+			2047, 2050, 2053, 2173, 2195, 2219
+
+	Indicates a problem with the application.
+
+        The problem must be corrected in the application.  Refer the problem to 
+        the development staff.
+
+MQSeries reason codes:  2009, 2161, 2162
+
+	Indicates a problem with MQSeries queue manager or related processes.
+
+        The necessary MQSeries processes must be running.  Verify that the
+        MQseries processes are running with the following command:
+        \"ps -ef | grep amq\"
+        (amqhasmx, amqzllp0, amqcrsta, amqzxma0, amqzlaa0 should be running)
+        If the processes are not running, restart them with the following command:
+        \"strmqm [QManagerName]\"
+
+MQSeries reason codes:  2013, 2027, 2041, 2048, 2051, 2052, 2101
+
+	Indicates a problem with MQSeries queue manager configuration.
+
+        The MQSeries queue manager configuration must be corrected.  Refer to the
+        application installation procedures to verify proper configuration.
+
+MQSeries reason codes:  2056, 2071, 2102
+
+	Indicates a problem with operating system resource availability.
+
+        The problem must be corrected in the operating system configuration.
+        Contact the OS system administrator.
+
+Additional information about the cause of problems related to MQSeries programs
+may be available in:
+
+  /var/mqm/qmgrs/[QManagerName]/errors/AMQERRnn.LOG (log entries are made in the
+  current log file; AMQERR01.LOG or AMQERR02.LOG or AMQERR03.LOG)
+
+  or
+
+  /var/mqm/errors/AMQnnnnn.n.FDC 
+  (FDC files are written for each error occurrence e.g. AMQ03440.0.FDC)
+
+If an MQSeries reason code not previously listed is encountered, contact the
+application administrator.  Also, if the procedures suggested above do not
+resolve the problem, contact the application administrator."
+message:                 "DSOIREPLY:1007:CRITICAL:putMsg() failed on DSOI_REPORTQ:DSOIREPLY exiting"
+message.match:           "DSOIREPLY:1007:CRITICAL:putMsg() failed on DSOI_REPORTQ:DSOIREPLY exiting"
+message.set:           "DSOIREPLY:1007:CRITICAL:putMsg() failed on DSOI_REPORTQ:DSOIREPLY exiting"
+messageGroup.set:        DSOI
+messageIdNo:             1007
+messageIdNo.set:         1007
+messageIdPrefix:         DSOI
+messageIdPrefix.set:     DSOI
+severity.set:            critical
+========================================
+suppress:                dups 15m
+notification:            yes
+application:             DSOI
+application.set:         DSOI
+applVersion.set:  6.0
+architecture.set:        UNIX
+instructions.set:        "Overview/Summary
+
+     The DSOIReply process is unable to get a message from a queue and so is
+     unable to continue.
+
+Diagnostic/Corrective Procedure
+
+MQSeries reason codes:  2004, 2005, 2010, 2018, 2019, 2026, 2036, 2037, 2046,
+			2090, 2186, 2195, 2219
+
+	Indicates a problem with the application.
+
+        The problem must be corrected in the application.  Refer the problem to 
+        the development staff.
+
+MQSeries reason codes:  2009, 2161, 2162
+
+	Indicates a problem with MQSeries queue manager or related processes.
+
+        The necessary MQSeries processes must be running.  Verify that the
+        MQseries processes are running with the following command:
+        \"ps -ef | grep amq\"
+        (amqhasmx, amqzllp0, amqcrsta, amqzxma0, amqzlaa0 should be running)
+        If the processes are not running, restart them with the following command:
+        \"strmqm [QManagerName]\"
+
+MQSeries reason codes:  2016, 2041, 2052, 2101
+
+	Indicates a problem with MQSeries queue manager configuration.
+
+        The MQSeries queue manager configuration must be corrected.  Refer to the
+        application installation procedures to verify proper configuration.
+
+MQSeries reason codes:  2071, 2102
+
+	Indicates a problem with operating system resource availability.
+
+        The problem must be corrected in the operating system configuration.
+        Contact the OS system administrator.
+
+Additional information about the cause of problems related to MQSeries programs
+may be available in:
+
+  /var/mqm/qmgrs/[QManagerName]/errors/AMQERRnn.LOG (log entries are made in the
+  current log file; AMQERR01.LOG or AMQERR02.LOG or AMQERR03.LOG)
+
+  or
+
+  /var/mqm/errors/AMQnnnnn.n.FDC 
+  (FDC files are written for each error occurrence e.g. AMQ03440.0.FDC)
+
+If an MQSeries reason code not previously listed is encountered, contact the
+application administrator.  Also, if the procedures suggested above do not
+resolve the problem, contact the application administrator."
+message:                 "DSOIREPLY:1008:CRITICAL:errored because repList.get_reply() failed on ReplyToQ="
+message.match:           "DSOIREPLY:1008:CRITICAL:errored because repList\.get_reply() failed on ReplyToQ="
+message.set:           "DSOIREPLY:1008:CRITICAL:errored because repList\.get_reply() failed on ReplyToQ="
+messageGroup.set:        DSOI
+messageIdNo:             1008
+messageIdNo.set:         1008
+messageIdPrefix:         DSOI
+messageIdPrefix.set:     DSOI
+severity.set:            critical
+========================================
+suppress:                dups 15m
+notification:            yes
+application:             DSOI
+application.set:         DSOI
+applVersion.set:  6.0
+architecture.set:        UNIX
+instructions.set:        "Overview/Summary
+
+     The DSOIReply process is unable to put a message to a queue and so is
+     unable to continue.
+
+Diagnostic/Corrective Procedure
+
+MQSeries reason codes:  2004, 2005, 2018, 2019, 2026, 2029, 2030, 2039, 2046,
+			2047, 2050, 2053, 2173, 2195, 2219
+
+	Indicates a problem with the application.
+
+        The problem must be corrected in the application.  Refer the problem to 
+        the development staff.
+
+MQSeries reason codes:  2009, 2161, 2162
+
+	Indicates a problem with MQSeries queue manager or related processes.
+
+        The necessary MQSeries processes must be running.  Verify that the
+        MQseries processes are running with the following command:
+        \"ps -ef | grep amq\"
+        (amqhasmx, amqzllp0, amqcrsta, amqzxma0, amqzlaa0 should be running)
+        If the processes are not running, restart them with the following command:
+        \"strmqm [QManagerName]\"
+
+MQSeries reason codes:  2013, 2027, 2041, 2048, 2051, 2052, 2101
+
+	Indicates a problem with MQSeries queue manager configuration.
+
+        The MQSeries queue manager configuration must be corrected.  Refer to the
+        application installation procedures to verify proper configuration.
+
+MQSeries reason codes:  2056, 2071, 2102
+
+	Indicates a problem with operating system resource availability.
+
+        The problem must be corrected in the operating system configuration.
+        Contact the OS system administrator.
+
+Additional information about the cause of problems related to MQSeries programs
+may be available in:
+
+  /var/mqm/qmgrs/[QManagerName]/errors/AMQERRnn.LOG (log entries are made in the
+  current log file; AMQERR01.LOG or AMQERR02.LOG or AMQERR03.LOG)
+
+  or
+
+  /var/mqm/errors/AMQnnnnn.n.FDC 
+  (FDC files are written for each error occurrence e.g. AMQ03440.0.FDC)
+
+If an MQSeries reason code not previously listed is encountered, contact the
+application administrator.  Also, if the procedures suggested above do not
+resolve the problem, contact the application administrator."
+message:                 "DSOIREPLY:1009:CRITICAL:errored because putMsg() failed on ReplyToQ="
+message.match:           "DSOIREPLY:1009:CRITICAL:errored because putMsg() failed on ReplyToQ="
+message.set:           "DSOIREPLY:1009:CRITICAL:errored because putMsg() failed on ReplyToQ="
+messageGroup.set:        DSOI
+messageIdNo:             1009
+messageIdNo.set:         1009
+messageIdPrefix:         DSOI
+messageIdPrefix.set:     DSOI
+severity.set:            critical
+========================================
+suppress:                dups 15m
+notification:            yes
+application:             DSOI
+application.set:         DSOI
+applVersion.set:  6.0
+architecture.set:        UNIX
+instructions.set:        "Overview/Summary
+
+     The DSOIRequest process is unable to send a message response back to the requesting application as received from the Service Order Processor.
+     unable to continue.
+
+Diagnostic/Corrective Procedure
+
+This error could occur if the MQ Series is not converting the EBCIDIC hexFF character into the ASCII 9F.  If this is the case then contact the DSOI support person to change the expeceted 9F character to the correct ASCII character that MQ Series converts a xFF character."
+message:                 "DSOIREPLY:1010:CRITICAL:failed because the expected ASCII 9F character was not found from MQSeries converting the RSOLAR message, DSOIReply can not continue!"
+message.match:           "DSOIREPLY:1010:CRITICAL:failed because the expected ASCII 9F character was not found from MQSeries converting the RSOLAR message, DSOIReply can not continue!"
+message.set:           "DSOIREPLY:1010:CRITICAL:failed because the expected ASCII 9F character was not found from MQSeries converting the RSOLAR message, DSOIReply can not continue!"
+messageGroup.set:        DSOI
+messageIdNo:             1010
+messageIdNo.set:         1010
+messageIdPrefix:         DSOI
+messageIdPrefix.set:     DSOI
+severity.set:            critical
+========================================
+suppress:                dups 15m
+notification:            yes
+application:             DSOI
+application.set:         DSOI
+applVersion.set:  6.0
+architecture.set:        UNIX
+instructions.set:        "Overview/Summary
+
+     The DSOIRequest process is unable to send a message response back to the requesting application as received from the Service Order Processor.
+     unable to continue.
+
+Diagnostic/Corrective Procedure
+
+Contact the RSOLAR support team to find out what it is sending to DSOI as a response message.  DSOI is not receiving all the specified parameters that it expects from RSOLAR. Verify with them that they are not sending the correct message format to DSOI as a reponse.  This error will occur until they correct their message format.  Also contact the DSOI support person to verify with the RSOLAR support person what is expected as input to DSOI! "
+message:                 "DSOIREPLY:1011:CRITICAL:failed because not all parameters were sent from the RSOLAR SOP"
+message.match:           "DSOIREPLY:1011:CRITICAL:failed because not all parameters were sent from the RSOLAR SOP"
+message.set:           "DSOIREPLY:1011:CRITICAL:failed because not all parameters were sent from the RSOLAR SOP"
+messageGroup.set:        DSOI
+messageIdNo:             1011
+messageIdNo.set:         1011
+messageIdPrefix:         DSOI
+messageIdPrefix.set:     DSOI
+severity.set:            critical
+========================================
+suppress:                dups 15m
+notification:            yes
+application:             DSOI
+application.set:         DSOI
+applVersion.set:  6.0
+architecture.set:        UNIX
+instructions.set:        "Overview/Summary
+
+     The DSOIReply process is unable to find a correlation message in QL_DSOI_HOLD. The Service Order Processor reply message cannot be returned to the requesting application.
+
+Diagnostic/Corrective Procedure
+
+Verify that messages are being placed on the hold queue by DSOIRequest. This error could occur if messages are removed from the hold queue (QL_DSOI_HOLD) while responses are pending from the Service Order Processor or if invalid message IDs are returned from the Service Order Processor."
+
+message:                 "DSOIREPLY:1012:CRITICAL:errored because message could not be correlated:reply message will not be sent ! msgid = "
+message.match:           "DSOIREPLY:1012:CRITICAL:errored because message could not be correlated:reply message will not be sent ! msgid = "
+message.set:           "DSOIREPLY:1012:CRITICAL:errored because message could not be correlated:reply message will not be sent ! msgid = "
+messageGroup.set:        DSOI
+messageIdNo:             1012
+messageIdNo.set:         1012
+messageIdPrefix:         DSOI
+messageIdPrefix.set:     DSOI
+severity.set:            critical
+========================================
+suppress:                dups 15m
+notification:            yes
+application:             DSOI
+application.set:         DSOI
+applVersion.set:  6.0
+architecture.set:        UNIX
+instructions.set:        "Overview/Summary
+
+     The DSOILog process is unable to get a message from a queue and so is
+     unable to continue.
+
+Diagnostic/Corrective Procedure
+
+MQSeries reason codes:  2004, 2005, 2010, 2018, 2019, 2026, 2036, 2037, 2046,
+			2090, 2186, 2195, 2219
+
+	Indicates a problem with the application.
+
+        The problem must be corrected in the application.  Refer the problem to 
+        the development staff.
+
+MQSeries reason codes:  2009, 2161, 2162
+
+	Indicates a problem with MQSeries queue manager or related processes.
+
+        The necessary MQSeries processes must be running.  Verify that the
+        MQseries processes are running with the following command:
+        \"ps -ef | grep amq\"
+        (amqhasmx, amqzllp0, amqcrsta, amqzxma0, amqzlaa0 should be running)
+        If the processes are not running, restart them with the following command:
+        \"strmqm [QManagerName]\"
+
+MQSeries reason codes:  2016, 2041, 2052, 2101
+
+	Indicates a problem with MQSeries queue manager configuration.
+
+        The MQSeries queue manager configuration must be corrected.  Refer to the
+        application installation procedures to verify proper configuration.
+
+MQSeries reason codes:  2071, 2102
+
+	Indicates a problem with operating system resource availability.
+
+        The problem must be corrected in the operating system configuration.
+        Contact the OS system administrator.
+
+Additional information about the cause of problems related to MQSeries programs
+may be available in:
+
+  /var/mqm/qmgrs/[QManagerName]/errors/AMQERRnn.LOG (log entries are made in the
+  current log file; AMQERR01.LOG or AMQERR02.LOG or AMQERR03.LOG)
+
+  or
+
+  /var/mqm/errors/AMQnnnnn.n.FDC 
+  (FDC files are written for each error occurrence e.g. AMQ03440.0.FDC)
+
+If an MQSeries reason code not previously listed is encountered, contact the
+application administrator.  Also, if the procedures suggested above do not
+resolve the problem, contact the application administrator."
+message:                 "DSOILog:2001:CRITICAL:Unable to get error messages from the ERROR_Q because DSOIreceiveMQ::getMsg() did not returned MQCC_OK or MQRC_NO_MSG_AVAILABLE:DSOILog process terminating"
+message.match:           "DSOILog:2001:CRITICAL:Unable to get error messages from the ERROR_Q because DSOIreceiveMQ::getMsg() did not returned MQCC_OK or MQRC_NO_MSG_AVAILABLE:DSOILog process terminating"
+message.set:           "DSOILog:2001:CRITICAL:Unable to get error messages from the ERROR_Q because DSOIreceiveMQ::getMsg() did not returned MQCC_OK or MQRC_NO_MSG_AVAILABLE:DSOILog process terminating"
+messageGroup.set:        DSOI
+messageIdNo:             2001
+messageIdNo.set:         2001
+messageIdPrefix:         DSOI
+messageIdPrefix.set:     DSOI
+severity.set:            critical
+========================================
+suppress:                dups 15m
+notification:            yes
+application:             DSOI
+application.set:         DSOI
+applVersion.set:  6.0
+architecture.set:        UNIX
+instructions.set:        "Overview/Summary
+
+     The DSOIReport process is unable to get a message from a queue and so is
+     unable to continue.
+
+Diagnostic/Corrective Procedure
+
+MQSeries reason codes:  2004, 2005, 2010, 2018, 2019, 2026, 2036, 2037, 2046,
+			2090, 2186, 2195, 2219
+
+	Indicates a problem with the application.
+
+        The problem must be corrected in the application.  Refer the problem to 
+        the development staff.
+
+MQSeries reason codes:  2009, 2161, 2162
+
+	Indicates a problem with MQSeries queue manager or related processes.
+
+        The necessary MQSeries processes must be running.  Verify that the
+        MQseries processes are running with the following command:
+        \"ps -ef | grep amq\"
+        (amqhasmx, amqzllp0, amqcrsta, amqzxma0, amqzlaa0 should be running)
+        If the processes are not running, restart them with the following command:
+        \"strmqm [QManagerName]\"
+
+MQSeries reason codes:  2016, 2041, 2052, 2101
+
+	Indicates a problem with MQSeries queue manager configuration.
+
+        The MQSeries queue manager configuration must be corrected.  Refer to the
+        application installation procedures to verify proper configuration.
+
+MQSeries reason codes:  2071, 2102
+
+	Indicates a problem with operating system resource availability.
+
+        The problem must be corrected in the operating system configuration.
+        Contact the OS system administrator.
+
+Additional information about the cause of problems related to MQSeries programs
+may be available in:
+
+  /var/mqm/qmgrs/[QManagerName]/errors/AMQERRnn.LOG (log entries are made in the
+  current log file; AMQERR01.LOG or AMQERR02.LOG or AMQERR03.LOG)
+
+  or
+
+  /var/mqm/errors/AMQnnnnn.n.FDC 
+  (FDC files are written for each error occurrence e.g. AMQ03440.0.FDC)
+
+If an MQSeries reason code not previously listed is encountered, contact the
+application administrator.  Also, if the procedures suggested above do not
+resolve the problem, contact the application administrator."
+message:                 "DSOIReport:3001:CRITICAL:Unable to get error messages from the REPORT_Q because DSOIreceiveMQ::getMsg() did not returned MQCC_OK or MQRC_NO_MSG_AVAILABLE:DSOIReport process terminating"
+message.match:           "DSOIReport:3001:CRITICAL:Unable to get error messages from the REPORT_Q because DSOIreceiveMQ::getMsg() did not returned MQCC_OK or MQRC_NO_MSG_AVAILABLE:DSOIReport process terminating"
+message.set:           "DSOIReport:3001:CRITICAL:Unable to get error messages from the REPORT_Q because DSOIreceiveMQ::getMsg() did not returned MQCC_OK or MQRC_NO_MSG_AVAILABLE:DSOIReport process terminating"
+messageGroup.set:        DSOI
+messageIdNo:             3001
+messageIdNo.set:         3001
+messageIdPrefix:         DSOI
+messageIdPrefix.set:     DSOI
+severity.set:            critical
+========================================
+suppress:                dups 15m
+notification:            yes
+application:             DSOI
+application.set:         DSOI
+applVersion.set:  6.0
+architecture.set:        UNIX
+instructions.set:        "Overview/Summary
+
+     The DSOIMQ (REquest or REply) process is unable to put a message to the
+     ERRORQ queue (unable to continue).
+
+Diagnostic/Corrective Procedure
+
+MQSeries reason codes:  2004, 2005, 2018, 2019, 2026, 2029, 2039, 2046,
+			2047, 2050, 2053, 2173, 2195
+
+	Indicates a problem with the application accessing an MQSeries message
+	queue.  The problem must be corrected in the application.  Refer the 
+	problem to the development staff.
+
+MQSeries reason codes:  2009, 2161, 2162
+
+	Indicates a problem with MQSeries queue manager or related processes.
+
+	The necessary MQSeries processes must be running.  Verify that the
+	MQseries processes are running with the following command:
+        \"ps -ef | grep amq\"
+        (amqhasmx, amqzllp0, amqcrsta, amqzxma0, amqzlaa0 should be running)
+        If all the processes are not running, restart them with the following command:
+        \"strmqm [QManagerName]\"
+
+MQSeries reason codes:  2013, 2027, 2041, 2048, 2051, 2052, 2101
+
+	Indicates a problem with MQSeries queue manager configuration.
+        The MQSeries queue manager configuration must be corrected.
+        Refer to the application installation procedures to verify proper
+        configuration.
+
+MQSeries reason codes:  2056, 2071, 2102
+
+	Indicates a problem with operating system resource availability.
+
+        The problem must be corrected in the operating system configuration.
+        Contact the OS system administrator.
+
+Additional information about the cause of problems related to MQSeries programs
+may be available in:
+
+  /var/mqm/qmgrs/[QManagerName]/errors/AMQERRnn.LOG (log entries are made in the
+  current log file; AMQERR01.LOG or AMQERR02.LOG or AMQERR03.LOG)
+  or
+  /var/mqm/errors/AMQnnnnn.n.FDC 
+  (FDC files are written for each error occurrence e.g. AMQ03440.0.FDC)
+
+If an MQSeries reason code not previously listed is encountered, contact the
+application administrator.  Also, if the procedures suggested above do not
+resolve the problem, contact the application administrator."
+message:                 "DSOIMQ:4001:CRITICAL:Can't send messages to the ERRORQ return code ="
+message.match:           "DSOIMQ:4001:CRITICAL:Can't send messages to the ERRORQ return code ="
+message.set:           "DSOIMQ:4001:CRITICAL:Can't send messages to the ERRORQ return code ="
+messageGroup.set:        DSOI
+messageIdNo:             4001
+messageIdNo.set:         4001
+messageIdPrefix:         DSOI
+messageIdPrefix.set:     DSOI
+severity.set:            critical
+========================================
+suppress:                dups 15m
+notification:            yes
+application:             DSOI
+application.set:         DSOI
+applVersion.set:  6.0
+architecture.set:        UNIX
+instructions.set:        "Overview/Summary
+
+     The DSOIRequest process is unable to access a queue and so is unable to
+     continue.
+
+Diagnostic/Corrective Procedure
+
+MQSeries reason codes:  2017, 2018, 2019, 2042, 2043, 2044, 2045, 2046, 2057,
+			2092, 2194, 2195, 2219
+
+	Indicates a problem with the application.
+
+        The problem must be corrected in the application.  Refer the problem to 
+        the development staff.
+
+MQSeries reason codes: 2009, 2059, 2161, 2162
+
+	Indicates a problem with MQSeries queue manager or related processes.
+
+        The necessary MQSeries processes must be running.  Verify that the
+        MQseries processes are running with the following command:
+        \"ps -ef | grep amq\"
+        (amqhasmx, amqzllp0, amqcrsta, amqzxma0, amqzlaa0 should be running)
+        If the processes are not running, restart them with the following command:
+        \"strmqm [QManagerName]\"
+
+MQSeries reason codes:  2011, 2035, 2063, 2085, 2086, 2087, 2091, 2101, 2184,
+			2196, 2197, 2198, 2199
+
+	Indicates a problem with MQSeries queue manager configuration.
+
+        The MQSeries queue manager configuration must be corrected.  Refer to the
+        application installation procedures to verify proper configuration.
+
+MQSeries reason codes: 2071, 2102
+
+	Indicates a problem with operating system resource availability.
+
+        The problem must be corrected in the operating system configuration.
+        Contact the OS system administrator.
+
+Additional information about the cause of problems related to MQSeries programs
+may be available in:
+
+  /var/mqm/qmgrs/[QManagerName]/errors/AMQERRnn.LOG (log entries are made in the
+  current log file; AMQERR01.LOG or AMQERR02.LOG or AMQERR03.LOG)
+
+  or
+
+  /var/mqm/errors/AMQnnnnn.n.FDC 
+  (FDC files are written for each error occurrence e.g. AMQ03440.0.FDC)
+
+If an MQSeries reason code not previously listed is encountered, contact the
+application administrator.  Also, if the procedures suggested above do not
+resolve the problem, contact the application administrator."
+message:                 "DSOIMQ:4002:CRITICAL:Constructor  for DSOIreceiveMQ class MQOPEN failed for object ="
+message.match:           "DSOIMQ:4002:CRITICAL:Constructor  for DSOIreceiveMQ class MQOPEN failed for object ="
+message.set:           "DSOIMQ:4002:CRITICAL:Constructor  for DSOIreceiveMQ class MQOPEN failed for object ="
+messageGroup.set:        DSOI
+messageIdNo:             4002
+messageIdNo.set:         4002
+messageIdPrefix:         DSOI
+messageIdPrefix.set:     DSOI
+severity.set:            critical
+========================================
+suppress:                dups 15m
+notification:            yes
+application:             DSOI
+application.set:         DSOI
+applVersion.set:  6.0
+architecture.set:        UNIX
+instructions.set:        "Overview/Summary
+
+     The DSOIRequest process is unable to get a message from a queue and so is
+     unable to continue.
+
+Diagnostic/Corrective Procedure
+
+MQSeries reason codes:  2004, 2005, 2010, 2018, 2019, 2026, 2036, 2037, 2046,
+			2090, 2186, 2195, 2219
+
+	Indicates a problem with the application.
+
+        The problem must be corrected in the application.  Refer the problem to 
+        the development staff.
+
+MQSeries reason codes:  2009, 2161, 2162
+
+	Indicates a problem with MQSeries queue manager or related processes.
+
+        The necessary MQSeries processes must be running.  Verify that the
+        MQseries processes are running with the following command:
+        \"ps -ef | grep amq\"
+        (amqhasmx, amqzllp0, amqcrsta, amqzxma0, amqzlaa0 should be running)
+        If the processes are not running, restart them with the following command:
+        \"strmqm [QManagerName]\"
+
+MQSeries reason codes:  2016, 2041, 2052, 2101
+
+	Indicates a problem with MQSeries queue manager configuration.
+
+        The MQSeries queue manager configuration must be corrected.  Refer to the
+        application installation procedures to verify proper configuration.
+
+MQSeries reason codes:  2071, 2102
+
+	Indicates a problem with operating system resource availability.
+
+        The problem must be corrected in the operating system configuration.
+        Contact the OS system administrator.
+
+Additional information about the cause of problems related to MQSeries programs
+may be available in:
+
+  /var/mqm/qmgrs/[QManagerName]/errors/AMQERRnn.LOG (log entries are made in the
+  current log file; AMQERR01.LOG or AMQERR02.LOG or AMQERR03.LOG)
+
+  or
+
+  /var/mqm/errors/AMQnnnnn.n.FDC 
+  (FDC files are written for each error occurrence e.g. AMQ03440.0.FDC)
+
+If an MQSeries reason code not previously listed is encountered, contact the
+application administrator.  Also, if the procedures suggested above do not
+resolve the problem, contact the application administrator."
+message:                 "DSOIMQ:4003:CRITICAL:getMsg() FAILED because MQGET failed: message was not received and is still on queue "
+message.match:           "DSOIMQ:4003:CRITICAL:getMsg() FAILED because MQGET failed: message was not received and is still on queue "
+message.set:           "DSOIMQ:4003:CRITICAL:getMsg() FAILED because MQGET failed: message was not received and is still on queue "
+messageGroup.set:        DSOI
+messageIdNo:             4003
+messageIdNo.set:         4003
+messageIdPrefix:         DSOI
+messageIdPrefix.set:     DSOI
+severity.set:            critical
+========================================
+suppress:                dups 15m
+notification:            yes
+application:             DSOI
+application.set:         DSOI
+applVersion.set:  6.0
+architecture.set:        UNIX
+instructions.set:        "Overview/Summary
+
+     The DSOIreceiveMQ process is unable to disconnect from the MQSeries queue
+     manager and so a message queue was not properly closed.
+
+Diagnostic/Corrective Procedure
+
+MQSeries reason codes: 2009, 2162
+
+	Indicates a problem with MQSeries queue manager or related processes.
+
+	The necessary MQSeries processes must be running.  Verify that the
+	MQseries processes are running with the following command:
+	\"ps -ef | grep amq\"
+	(amqhasmx, amqzllp0, amqcrsta, amqzxma0, amqzlaa0 should be running)
+	If the processes are not running, restart them with the following command:
+	\"strmqm [QManagerName]\"
+
+
+MQSeries reason codes: 2035, 2063, 2101
+
+	Indicates a problem with MQSeries queue manager configuration.
+
+	The MQSeries queue manager configuration must be corrected.  Refer to the
+	application installation procedures to verify proper configuration.
+
+MQSeries reason codes:  2018, 2019, 2045, 2046, 2055, 2195, 2219
+
+	Indicates a problem with the application.
+
+	The problem must be corrected in the application.  Refer the problem to 
+	the development staff.
+
+MQSeries reason codes: 2071, 2102
+
+	Indicates a problem with operating system resource availability.
+
+	The problem must be corrected in the operating system configuration.
+	Contact the OS system administrator.
+
+Additional information about the cause of problems related to MQSeries programs
+may be available in:
+
+  /var/mqm/qmgrs/[QManagerName]/errors/AMQERRnn.LOG (log entries are made in the
+  current log file; AMQERR01.LOG or AMQERR02.LOG or AMQERR03.LOG)
+
+  or
+
+  /var/mqm/errors/AMQnnnnn.n.FDC 
+  (FDC files are written for each error occurrence e.g. AMQ03440.0.FDC)
+
+If an MQSeries reason code not previously listed is encountered, contact the
+application administrator.  Also, if the procedures suggested above do not
+resolve the problem, contact the application administrator."
+message:                 "DSOIMQ:4004:CRITICAL:Destructor  for DSOIreceiveMQ class MQCLOSE failed "
+message.match:           "DSOIMQ:4004:CRITICAL:Destructor  for DSOIreceiveMQ class MQCLOSE failed "
+message.set:           "DSOIMQ:4004:CRITICAL:Destructor  for DSOIreceiveMQ class MQCLOSE failed "
+messageGroup.set:        DSOI
+messageIdNo:             4004
+messageIdNo.set:         4004
+messageIdPrefix:         DSOI
+messageIdPrefix.set:     DSOI
+severity.set:            critical
+========================================
+suppress:                dups 15m
+notification:            yes
+application:             DSOI
+application.set:         DSOI
+applVersion.set:  6.0
+architecture.set:        UNIX
+instructions.set:        "Overview/Summary
+
+     The DSOIReply process is unable to connect to the MQSeries queue manager
+     and so is unable to continue.
+
+Diagnostic/Corrective Procedure
+
+MQSeries reason codes: 2002, 2195, 2219
+
+	Indicates a problem with the application.
+
+        The problem must be corrected in the application.  Refer the problem to 
+        the development staff.
+
+MQSeries reason codes: 2009, 2059, 2161, 2162
+
+	Indicates a problem with MQSeries queue manager or related processes.
+
+        The necessary MQSeries processes must be running.  Verify that the
+        MQseries processes are running with the following command:
+        \"ps -ef | grep amq\"
+        (amqhasmx, amqzllp0, amqcrsta, amqzxma0, amqzlaa0 should be running)
+        If the processes are not running, restart them with the following command:
+        \"strmqm [QManagerName]\"
+
+MQSeries reason codes: 2035, 2058, 2063
+
+	Indicates a problem with MQSeries queue manager configuration.
+
+        The MQSeries queue manager configuration must be corrected.  Refer to the
+        application installation procedures to verify proper configuration.
+
+MQSeries reason codes: 2071, 2102
+
+	Indicates a problem with operating system resource availability.
+
+        The problem must be corrected in the operating system configuration.
+        Contact the OS system administrator.
+
+Additional information about the cause of problems related to MQSeries programs
+may be available in:
+
+  /var/mqm/qmgrs/[QManagerName]/errors/AMQERRnn.LOG (log entries are made in the
+  current log file; AMQERR01.LOG or AMQERR02.LOG or AMQERR03.LOG)
+
+  or
+
+  /var/mqm/errors/AMQnnnnn.n.FDC 
+  (FDC files are written for each error occurrence e.g. AMQ03440.0.FDC)
+
+If an MQSeries reason code not previously listed is encountered, contact the
+application administrator.  Also, if the procedures suggested above do not
+resolve the problem, contact the application administrator."
+message:                 "DSOIMQ:4005:CRITICAL:Constructor for DSOIrouteMQ MQCONN() failed for QueueManager"
+message.match:           "DSOIMQ:4005:CRITICAL:Constructor for DSOIrouteMQ MQCONN() failed for QueueManager"
+message.set:           "DSOIMQ:4005:CRITICAL:Constructor for DSOIrouteMQ MQCONN() failed for QueueManager"
+messageGroup.set:        DSOI
+messageIdNo:             4005
+messageIdNo.set:         4005
+messageIdPrefix:         DSOI
+messageIdPrefix.set:     DSOI
+severity.set:            critical
+========================================
+suppress:                dups 15m
+notification:            yes
+application:             DSOI
+application.set:         DSOI
+applVersion.set:  6.0
+architecture.set:        UNIX
+instructions.set:        "Overview/Summary
+
+     The DSOIRequest process encountered an application error condition
+     and so is unable to continue.
+
+Diagnostic/Corrective Procedure
+
+MQSeries reason codes:  2004, 2005, 2018, 2019, 2026, 2029, 2030, 2039, 2046,
+			2047, 2050, 2053, 2173, 2195, 2219
+
+	Indicates a problem with the application.
+
+        The problem must be corrected in the application.  Refer the problem to 
+        the development staff.
+
+MQSeries reason codes:  2009, 2161, 2162
+
+	Indicates a problem with MQSeries queue manager or related processes.
+
+        The necessary MQSeries processes must be running.  Verify that the
+        MQseries processes are running with the following command:
+        \"ps -ef | grep amq\"
+        (amqhasmx, amqzllp0, amqcrsta, amqzxma0, amqzlaa0 should be running)
+        If the processes are not running, restart them with the following command:
+        \"strmqm [QManagerName]\"
+
+MQSeries reason codes:  2013, 2027, 2041, 2048, 2051, 2052, 2101
+
+	Indicates a problem with MQSeries queue manager configuration.
+
+        The MQSeries queue manager configuration must be corrected.  Refer to the
+        application installation procedures to verify proper configuration.
+
+MQSeries reason codes:  2056, 2071, 2102
+
+	Indicates a problem with operating system resource availability.
+
+        The problem must be corrected in the operating system configuration.
+        Contact the OS system administrator.
+
+Additional information about the cause of problems related to MQSeries programs
+may be available in:
+
+  /var/mqm/qmgrs/[QManagerName]/errors/AMQERRnn.LOG (log entries are made in the
+  current log file; AMQERR01.LOG or AMQERR02.LOG or AMQERR03.LOG)
+
+  or
+
+  /var/mqm/errors/AMQnnnnn.n.FDC 
+  (FDC files are written for each error occurrence e.g. AMQ03440.0.FDC)
+
+If an MQSeries reason code not previously listed is encountered, contact the
+application administrator.  Also, if the procedures suggested above do not
+resolve the problem, contact the application administrator."
+message:                 "DSOIMQ:4006:CRITICAL:Could not create the _reportMsg array so must exit!"
+message.match:           "DSOIMQ:4006:CRITICAL:Could not create the _reportMsg array so must exit!"
+message.set:           "DSOIMQ:4006:CRITICAL:Could not create the _reportMsg array so must exit!"
+messageGroup.set:        DSOI
+messageIdNo:             4006
+messageIdNo.set:         4006
+messageIdPrefix:         DSOI
+messageIdPrefix.set:     DSOI
+severity.set:            critical
+========================================
+suppress:                dups 15m
+notification:            yes
+application:             DSOI
+application.set:         DSOI
+applVersion.set:  6.0
+architecture.set:        UNIX
+instructions.set:        "Overview/Summary
+
+     The DSOIRequest process is unable to access a queue and so is unable to
+     continue.
+
+Diagnostic/Corrective Procedure
+
+MQSeries reason codes:  2017, 2018, 2019, 2042, 2043, 2044, 2045, 2046, 2057,
+			2092, 2194, 2195, 2219
+
+	Indicates a problem with the application.
+
+        The problem must be corrected in the application.  Refer the problem to 
+        the development staff.
+
+MQSeries reason codes: 2009, 2059, 2161, 2162
+
+	Indicates a problem with MQSeries queue manager or related processes.
+
+        The necessary MQSeries processes must be running.  Verify that the
+        MQseries processes are running with the following command:
+        \"ps -ef | grep amq\"
+        (amqhasmx, amqzllp0, amqcrsta, amqzxma0, amqzlaa0 should be running)
+        If the processes are not running, restart them with the following command:
+        \"strmqm [QManagerName]\"
+			2196, 2197, 2198, 2199
+
+	Indicates a problem with MQSeries queue manager configuration.
+
+        The MQSeries queue manager configuration must be corrected.  Refer to the
+        application installation procedures to verify proper configuration.
+
+MQSeries reason codes: 2071, 2102
+
+	Indicates a problem with operating system resource availability.
+
+        The problem must be corrected in the operating system configuration.
+        Contact the OS system administrator.
+
+Additional information about the cause of problems related to MQSeries programs
+may be available in:
+
+  /var/mqm/qmgrs/[QManagerName]/errors/AMQERRnn.LOG (log entries are made in the
+  current log file; AMQERR01.LOG or AMQERR02.LOG or AMQERR03.LOG)
+
+  or
+
+  /var/mqm/errors/AMQnnnnn.n.FDC 
+  (FDC files are written for each error occurrence e.g. AMQ03440.0.FDC)
+
+If an MQSeries reason code not previously listed is encountered, contact the
+application administrator.  Also, if the procedures suggested above do not
+resolve the problem, contact the application administrator."
+message:                 "DSOIMQ:4007:CRITICAL:Constructor  for DSOIsendMQ class MQOPEN failed for object of "
+message.match:           "DSOIMQ:4007:CRITICAL:Constructor  for DSOIsendMQ class MQOPEN failed for object of "
+message.set:           "DSOIMQ:4007:CRITICAL:Constructor  for DSOIsendMQ class MQOPEN failed for object of "
+messageGroup.set:        DSOI
+messageIdNo:             4007
+messageIdNo.set:         4007
+messageIdPrefix:         DSOI
+messageIdPrefix.set:     DSOI
+severity.set:            critical
+========================================
+suppress:                dups 15m
+notification:            yes
+application:             DSOI
+application.set:         DSOI
+applVersion.set:  6.0
+architecture.set:        UNIX
+instructions.set:        "Overview/Summary
+
+     The DSOIRequest process is unable to put a message to a queue and so is
+     unable to continue.
+
+Diagnostic/Corrective Procedure
+
+MQSeries reason codes:  2004, 2005, 2018, 2019, 2026, 2029, 2030, 2039, 2046,
+			2047, 2050, 2053, 2173, 2195, 2219
+
+	Indicates a problem with the application.
+
+        The problem must be corrected in the application.  Refer the problem to 
+        the development staff.
+
+MQSeries reason codes:  2009, 2161, 2162
+
+	Indicates a problem with MQSeries queue manager or related processes.
+
+        The necessary MQSeries processes must be running.  Verify that the
+        MQseries processes are running with the following command:
+        \"ps -ef | grep amq\"
+        (amqhasmx, amqzllp0, amqcrsta, amqzxma0, amqzlaa0 should be running)
+        If the processes are not running, restart them with the following command:
+        \"strmqm [QManagerName]\"
+
+MQSeries reason codes:  2013, 2027, 2041, 2048, 2051, 2052, 2101
+
+	Indicates a problem with MQSeries queue manager configuration.
+
+        The MQSeries queue manager configuration must be corrected.  Refer to the
+        application installation procedures to verify proper configuration.
+
+MQSeries reason codes:  2056, 2071, 2102
+
+	Indicates a problem with operating system resource availability.
+
+        The problem must be corrected in the operating system configuration.
+        Contact the OS system administrator.
+
+Additional information about the cause of problems related to MQSeries programs
+may be available in:
+
+  /var/mqm/qmgrs/[QManagerName]/errors/AMQERRnn.LOG (log entries are made in the
+  current log file; AMQERR01.LOG or AMQERR02.LOG or AMQERR03.LOG)
+
+  or
+
+  /var/mqm/errors/AMQnnnnn.n.FDC 
+  (FDC files are written for each error occurrence e.g. AMQ03440.0.FDC)
+
+If an MQSeries reason code not previously listed is encountered, contact the
+application administrator.  Also, if the procedures suggested above do not
+resolve the problem, contact the application administrator."
+message:                 "DSOIMQ:4008:CRITICAL:putMsg() MQPUT FAILED for message="
+message.match:           "DSOIMQ:4008:CRITICAL:putMsg() MQPUT FAILED for message="
+message.set:           "DSOIMQ:4008:CRITICAL:putMsg() MQPUT FAILED for message="
+messageGroup.set:        DSOI
+messageIdNo:             4008
+messageIdNo.set:         4008
+messageIdPrefix:         DSOI
+messageIdPrefix.set:     DSOI
+severity.set:            critical
+========================================
+
